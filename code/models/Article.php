@@ -55,7 +55,9 @@ Class Article
     {
         try{
 
-            $sql = "SELECT * FROM articles a
+            $sql = "SELECT a.id, a.title_art, a.content, a.publish_date
+                    , t.title, a.theme_id
+                    FROM articles a
                     LEFT JOIN themes t ON t.id = a.theme_id         
                     WHERE a.theme_id = ?" ;
             $stmt = DataBase::Connect()->prepare($sql);

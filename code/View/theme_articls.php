@@ -44,7 +44,7 @@ session_start();
        echo "
         <article class='bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-blue-500/50 transition-shadow'>
             <h3 class='text-xl font-semibold text-gray-100 hover:text-blue-400 cursor-pointer'>
-            <a href='./article.php?id={$a['theme_id']}'>{$a['title_art']}</a>
+            <a href='./article.php?id={$a['id']}'>{$a['title_art']}</a>
             </h3>
             <p class='mt-2 text-gray-300'>
             {$a['content']}.
