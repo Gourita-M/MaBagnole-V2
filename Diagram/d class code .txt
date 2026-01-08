@@ -1,0 +1,155 @@
+@startuml
+'=============================================
+' MaBagnole 
+'=============================================
+
+package "Users" {
+    class User {
+        - id : int
+        - name : string
+        - email : string
+        - password : string
+        - role : string  ' e.g. client, admin
+        + login()
+        + logout()
+    }
+
+    class Client {
+        + browseVehicles()
+        + viewVehicleDetails()
+        + makeReservation()
+        + searchVehicle()
+        + filterVehicles()
+        + addReview()
+        + editReview()
+        + deleteReview()
+        + likeReview()
+        + dislikeReview()
+        + markVehicleFavorite()
+        + browseBlogThemes()
+        + viewArticlesByTheme()
+        + addArticle()
+        + searchArticle()
+        + filterArticlesByTags()
+        + addComment()
+        + editComment()
+        + deleteComment()
+        + addArticleFavorite()
+    }
+
+    class Administrator {
+        + manageVehicles()
+        + bulkInsertVehicles()
+        + manageCategories()
+        + manageReservations()
+        + manageReviews()
+        + viewAdminDashboard()
+        + approveReservation()
+        + refuseReservation()
+        + manageClients()
+        + manageBlogThemes()
+        + manageBlogArticles()
+        + manageTags()
+        + bulkInsertTags()
+        + manageComments()
+        + approveArticle()
+    }
+
+    User <|-- Client
+    User <|-- Administrator
+}
+
+package "Car" {
+
+    class Category {
+        - id : int
+        - name : string
+        + getVehicles()
+    }
+
+    class Vehicle {
+        - id : int
+        - model : string
+        - dailyPrice : float
+        - available : bool
+        + getDetails()
+        + isAvailable()
+    }
+
+    class Reservation {
+        - id : int
+        - startDate : date
+        - endDate : date
+        - pickupLocation : string
+        - status : string  ' pending, approved, refused
+        + createReservation()
+        + approve()
+        + refuse()
+    }
+
+    class Review {
+        - id : int
+        - rating : int
+        - comment : string
+        - deleted : bool   ' soft delete
+        + edit()
+        + softDelete()
+        + like()
+        + dislike()
+    }
+
+    ' Relationships
+    Category "1" -- "0..*" Vehicle 
+    Vehicle "1" -- "0..*" Review
+    Vehicle "1" -- "0..*" Reservation
+    Client "1" -- "0..*" Reservation
+    Client "1" -- "0..*" Review 
+}
+
+package "Blog" {
+
+    class Theme {
+        - id : int
+        - title : string
+        - description : string
+        + getArticles()
+    }
+
+    class Article {
+        - id : int
+        - title : string
+        - content : string
+        - status : string   ' draft, published, pending
+        - publishDate : datetime
+        + addTag(tag : Tag)
+        + getComments()
+    }
+
+    class Tag {
+        - id : int
+        - name : string
+    }
+
+    class Comment {
+        - id : int
+        - content : string
+        - creationDate : datetime
+        - deleted : bool   ' soft delete
+        + edit()
+        + softDelete()
+    }
+
+    class FavoriteArticle {
+        
+    }
+
+    ' Relationships
+    Theme "1" -- "0..*" Article
+    Article "0..*" -- "0..*" Tag 
+    Article "1" -- "0..*" Comment 
+    Client "1" -- "0..*" Comment 
+    Client "1" -- "0..*" Article 
+    Client "1" -- "0..*" FavoriteArticle
+}
+
+@enduml
