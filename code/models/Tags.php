@@ -30,11 +30,15 @@ Class Tags
     {
         try{
             
-            $sql = "SELECT * FROM tags";
+            $sql = "SELECT t.name FROM article_tags a 
+                    JOIN tags t ON t.id = a.tag_id
+                    WHERE a.article_id = ? ";
 
             $stmt = DataBase::Connect()->prepare($sql);
 
-            $stmt->execute();
+            $stmt->execute([
+                $artid
+            ]);
 
             return $stmt->fetchAll();
 

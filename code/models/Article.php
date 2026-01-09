@@ -55,11 +55,24 @@ Class Article
     {
         try{
 
-            $sql = "SELECT a.id, a.title_art, a.content, a.publish_date
-                    , t.title, a.theme_id
+            $sql = "SELECT 
+                        t.title,
+                        a.id,
+                        a.title_art,
+                        a.content,
+                        a.publish_date,
+                        t.title AS theme_title,
+                        GROUP_CONCAT(tg.name SEPARATOR ', ') AS tags
                     FROM articles a
-                    LEFT JOIN themes t ON t.id = a.theme_id         
-                    WHERE a.theme_id = ?" ;
+                    LEFT JOIN themes t 
+                        ON t.id = a.theme_id
+                    LEFT JOIN article_tags at 
+                        ON at.article_id = a.id
+                    LEFT JOIN tags tg 
+                        ON tg.id = at.tag_id
+                    WHERE a.theme_id = ? AND a.status = 'published'
+                    GROUP BY a.id;
+                    " ;
             $stmt = DataBase::Connect()->prepare($sql);
 
             $stmt->execute([

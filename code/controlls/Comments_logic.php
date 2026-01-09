@@ -19,7 +19,7 @@ $comments->id = $_GET['id'];
 
 $datao = $artcomm->getArticles();
 $commdata = $comments->getCommentUserName();
-$tagsnames = $tagss->getTags();
+$tagsnames = $tagss->getTagsById($_GET['id']);
 
 if(isset($_POST['comment'])){
 

@@ -45,14 +45,13 @@ class Vehicles
 
 //editVehicle
 
-    public function editVehicle($id):bool
+    public function editVehicle($id): bool
     {
         try{
-        $sql = "UPDATE FROM vehicles SET
+        $sql = "UPDATE vehicles SET
                 model = ?,
                 price_day = ?, 
                 vehicle_status = ?, 
-                category_id = ?, 
                 Vehicle_image = ?
                 WHERE vehicle_id = ?
                 ";
@@ -61,7 +60,6 @@ class Vehicles
             $this->model,
             $this->price_day,
             $this->vehicle_status,
-            $this->category_id,
             $this->Vehicle_image,
             $id
         ]);
