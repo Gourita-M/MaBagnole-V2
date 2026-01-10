@@ -49,47 +49,55 @@ include_once "../controlls/theme_logic.php";
     </a>
   </div>
 
-  <div class="mb-6 flex gap-4">
-    <select id="tagFilter"
-            class="bg-gray-800 text-white px-4 py-2 rounded">
-      <option value="">All Tags</option>
-      <?php foreach($alltags as $tag): ?>
-      <option value="<?= $tag['name'] ?>"><?= $tag['name'] ?></option>
-      <?php endforeach; ?>
-    </select>
-  </div>
+  <!-- Filter -->
+<div class="mb-6 flex items-center gap-4">
+  <label for="tagFilter" class="text-gray-300 font-medium">
+    Filter by tag:
+  </label>
+  <select id="tagFilter"
+          class="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <option value="">All Tags</option>
+    <?php foreach($alltags as $tag): ?>
+      <option value="<?= $tag['name'] ?>">
+        <?= htmlspecialchars($tag['name']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</div>
 
-  <table id="articlesTable" class="display w-full rounded overflow-hidden">
-    <thead>
+<!-- Articles Table -->
+<div class="overflow-x-auto rounded-lg shadow-lg">
+  <table id="articlesTable" class="w-full text-sm text-left text-gray-300">
+    <thead class="bg-gray-800 text-gray-400 uppercase text-xs">
       <tr>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Tags</th>
-        <th>Published</th>
+        <th class="px-6 py-4">Title</th>
+        <th class="px-6 py-4">Content</th>
+        <th class="px-6 py-4">Tags</th>
+        <th class="px-6 py-4">Published</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="bg-gray-900 divide-y divide-gray-800">
 
       <?php foreach ($daata as $a): ?>
-        <tr>
-          <td class="font-semibold">
+        <tr class="hover:bg-gray-800 transition">
+          <td class="px-6 py-4 font-semibold">
             <a href="./article.php?id=<?= $a['id'] ?>"
-               class="text-blue-400 hover:underline">
+               class="text-blue-400 hover:text-blue-300 hover:underline">
               <?= htmlspecialchars($a['title_art']) ?>
             </a>
           </td>
 
-          <td>
-            <?= htmlspecialchars(substr($a['content'], 0, 120)) ?>...
+          <td class="px-6 py-4 text-gray-400">
+            <?= htmlspecialchars(substr($a['content'], 0, 120)) ?>…
           </td>
 
-          <td>
-            <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-sm">
+          <td class="px-6 py-4">
+            <span class="inline-block bg-blue-900/40 text-blue-300 px-3 py-1 rounded-full text-xs font-medium">
               <?= htmlspecialchars($a['tags']) ?>
             </span>
           </td>
 
-          <td>
+          <td class="px-6 py-4 text-gray-400">
             <?= htmlspecialchars($a['publish_date']) ?>
           </td>
         </tr>
@@ -97,15 +105,18 @@ include_once "../controlls/theme_logic.php";
 
     </tbody>
   </table>
+</div>
 
 </main>
 
-<footer class="bg-gray-800 mt-20 py-6 shadow-inner">
+<!-- Footer -->
+<footer class="bg-gray-900 mt-20 py-6 border-t border-gray-800">
   <div class="text-center text-gray-500 text-sm">
     &copy; 2026 MaBagnole. All rights reserved.
   </div>
 </footer>
 
+<!-- DataTables Script -->
 <script>
 $(document).ready(function () {
     const table = $('#articlesTable').DataTable({
@@ -113,9 +124,13 @@ $(document).ready(function () {
         searching: true,
         info: false,
         lengthChange: false,
+        pageLength: 6,
+        order: [[3, 'desc']],
         language: {
-            search: "Search article:"
-        }
+            search: "",
+            searchPlaceholder: "Search articles..."
+        },
+        dom: '<"flex justify-between items-center mb-4"f>rt<"flex justify-between items-center mt-4"p>'
     });
 
     $('#tagFilter').on('change', function () {
@@ -123,6 +138,7 @@ $(document).ready(function () {
     });
 });
 </script>
+
 
 </body>
 </html>

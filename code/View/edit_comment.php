@@ -37,7 +37,7 @@ if(isset($_POST['edit'])){
 <body>
 <?php include_once "./header.php"; ?>
 
-<div class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="bg-gray-900 flex items-center justify-center min-h-screen">
 
 <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
     <h1 class="text-2xl font-bold mb-6">Edit Comment</h1>

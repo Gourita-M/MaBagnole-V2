@@ -32,7 +32,7 @@ use code\models\Review;
 <body>
 <?php include_once "./header.php"; ?>
 
-    <div class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-900 flex items-center justify-center min-h-screen">
 
         <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
             <h1 class="text-2xl font-bold text-red-600 mb-4">Delete Review</h1>

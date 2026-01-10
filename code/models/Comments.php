@@ -49,6 +49,20 @@ Class Comments
 
 //getComments()
 
+    public function getComments()
+    {
+        try{
+            $sql = "SELECT * FROM comments";
+            $stmt = DataBase::Connect()->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch(pdoexception $e){
+            return $e;
+        }
+    }
+
+//getCommentsById()
+
     public function getCommentsById()
     {
         try{
@@ -144,6 +158,25 @@ Class Comments
 
             return false;
 
+        }
+    }
+
+    //deleteComments()
+
+    public function deleteComments()
+    {
+        try{
+            $sql = "DELETE FROM comments
+                    WHERE id = ?";
+            $stmt = DataBase::Connect()->prepare($sql);
+
+            $stmt->execute([
+                $this->id
+            ]);
+
+            return true;
+        }catch(pdoexception $e){
+            return false;
         }
     }
 

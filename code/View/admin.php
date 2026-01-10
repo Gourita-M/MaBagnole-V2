@@ -129,17 +129,64 @@ include_once "../controlls/admin_logic.php";
 </section>
 
 <section id="themes" class="admin-section hidden">
-  <h2 class="title">Themes Management</h2>
-  <input type="text" placeholder="Theme name" class="input">
-  <button class="btn-primary">Add Theme</button>
+
+  <h2 class="title mb-4 text-2xl font-bold text-gray-800">Themes Management</h2>
+
+  <form method="POST" id="add-theme-form" class="mb-8 space-y-4">
+    <input 
+      type="text" 
+      name="theme_name" 
+      placeholder="Theme name" 
+      class="input block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      required
+    >
+    <textarea 
+      name="description"
+      placeholder="Theme Description"
+      rows="5"
+      class="input block w-full border border-gray-300 rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+      required
+    ></textarea>
+    <button 
+      name="addtheme"
+      type="submit" 
+      class="btn-primary bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded"
+    >
+      Add Theme
+    </button>
+  </form>
+
+  <div id="existing-themes" class="space-y-4">
+    <?php foreach($listthemes as $them): ?>
+    <div class="theme-item p-4 border border-gray-300 rounded flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h3 class="font-semibold text-lg text-white-900"><?= htmlspecialchars($them['title']) ?></h3>
+        <p class="text-white-600"><?= htmlspecialchars($them['description']) ?></p>
+      </div>
+      <div class="flex gap-2">
+        <a href="./edit_Theme.php?themeid=<?= htmlspecialchars($them['id']) ?>" class="edit-btn bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-1 rounded font-medium">Edit</a>
+        <a href="./delete_Theme.php?themeid=<?= htmlspecialchars($them['id']) ?>" class="delete-btn bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded font-medium">Delete</a>
+      </div>
+    </div>
+    <?php endforeach; ?>
 </section>
 
 <section id="comments" class="admin-section hidden">
   <h2 class="title">Comments Moderation</h2>
+  <?php foreach($commentsdata as $commen): ?>
   <div class="card">
-    <p>Example comment</p>
-    <button class="btn-delete">Remove</button>
+    <p><?= htmlspecialchars($commen['content']) ?></p>
+    <div class="flex gap-5 justify-center items-center">
+      <?php if($commen['deleted'] === 1 ): ?>
+        <p class="text-yellow-200">Deleted</p>
+      <?php endif; ?>
+    <form method="POST">
+      <input type="hidden" name="commentid" value="<?= htmlspecialchars($commen['id']) ?>">
+      <button name="deletecomment" type="submit" class="btn-delete">Remove</button>
+    </form>
+    </div>
   </div>
+  <?php endforeach; ?>
 </section>
 
 </main>
