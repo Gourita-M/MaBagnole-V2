@@ -88,7 +88,7 @@ class Vehicles
 
 //getVehicle 
 
-    public function getVehicle():array
+    public function getVehicle(): array
     {
         $sql = "SELECT * FROM vehicles";
         $stmt = DataBase::Connect()->prepare($sql);

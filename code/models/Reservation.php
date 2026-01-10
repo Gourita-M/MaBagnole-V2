@@ -123,7 +123,8 @@ Class Reservation
     }
 
 //findReservationByUserId
-//getReservationByReservation
+
+//getReservationByVehicle
     public function getReservationByVehicle()
     {
         $sql = "SELECT * 
